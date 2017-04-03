@@ -14,12 +14,22 @@ public class Location {
     public Location(int locationID, String description, Map<String, Integer> exits) {
         this.locationID = locationID;
         this.description = description;
-        this.exits = new HashMap<>(exits);
+        if(exits!= null){
+            this.exits = new HashMap<>(exits);
+
+        }else{
+            this.exits = new HashMap<>();
+        }
         this.exits.put("Q", 0);
     }
 //    public void addExit(String direction, int location){
 //        exits.put(direction, location);
 //    }
+//Here is your challenge and the challenges to work out what is wrong with the location constructor that would
+//    allow the program to compile and crash at runtime so when you identify the problem modify the code to fix it
+//    so I just i’ll just say that again your challenge here is to work out what is wrong with the location constructor
+//    that you can see on screen line 14 that will allow the program to compile but crash on run time when you identify
+//    the problem modify the code to fix it.
 
     public int getLocationID() {
         return locationID;
@@ -33,3 +43,4 @@ public class Location {
         return new HashMap<String, Integer>(exits);
     }
 }
+

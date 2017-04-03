@@ -26,7 +26,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         Map<String, Integer> tempExit = new HashMap<>();
-        locations.put(0, new Location(0, "You are sitting in front of a computer learning Java", tempExit));
+        locations.put(0, new Location(0, "You are sitting in front of a computer learning Java", null));
 
 
         tempExit = new HashMap<>();
@@ -36,7 +36,6 @@ public class Main {
         tempExit.put("N", 5);
 //        tempExit.put("Q",0);
         locations.put(1, new Location(1, "You are standing at the end of a road before a small brick building",tempExit));
-
         tempExit = new HashMap<>();
         tempExit.put("N", 5);
 //        tempExit.put("Q",0);
