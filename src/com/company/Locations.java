@@ -14,28 +14,30 @@ public class Locations implements Map<Integer, Location> {
 
     private static Map<Integer, Location> locations = new HashMap<>();
 
-    public static void main(String[] args) {
-        FileWriter locFile = null;
-        try {
-            locFile = new FileWriter("locations.txt");
-            for(Location location : locations.values()){
-                locFile.write(location.getLocationID() + "," + location.getDescription() + "\n");
-            }
-        } catch (IOException e) {
-            System.out.println("in catch block");
-            e.printStackTrace();
-        } finally{
-            System.out.println("in finally block");
-            try {
-                if(locFile != null){
-                    locFile.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public static void main(String[] args) throws IOException {
 
+        try (FileWriter locFIle = new FileWriter("locations.txt")) {
+            for (Location location : locations.values()) {
+                locFIle.write(location.getLocationID() + "," + location.getDescription() + "\n");
+            }
         }
+
+//        FileWriter locFile = null;
+//        try {
+//            locFile = new FileWriter("locations.txt");
+//            for (Location location : locations.values()) {
+//                locFile.write(location.getLocationID() + "," + location.getDescription() + "\n");
+//            }
+//        } finally {
+//            System.out.println("in finally block");
+//
+//            if (locFile != null) {
+//                locFile.close();
+//            }
+//
+//        }
     }
+
     static {
         Map<String, Integer> tempExit = new HashMap<String, Integer>();
         locations.put(0, new Location(0, "You are sitting in front of a computer learning Java", null));
