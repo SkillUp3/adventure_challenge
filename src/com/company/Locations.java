@@ -12,13 +12,15 @@ public class Locations implements Map<Integer, Location> {
 
     public static void main(String[] args) throws IOException {
 
-        try (FileWriter locFIle = new FileWriter("locations.txt");
-             FileWriter dirFile = new FileWriter("directions.txt")
+        try (BufferedWriter locFIle = new BufferedWriter( new FileWriter("locations.txt"));
+             BufferedWriter dirFile = new BufferedWriter(new FileWriter("directions.txt"))
         ) {
             for (Location location : locations.values()) {
                 locFIle.write(location.getLocationID() + "," + location.getDescription() + "\n");
-                for(String direction : location.getExits().keySet()){
-                    dirFile.write(location.getLocationID() + "," + direction + "," + location.getExits().get(direction) + "\n");
+                for (String direction : location.getExits().keySet()) {
+                    if(!direction.equalsIgnoreCase("Q")){
+                        dirFile.write(location.getLocationID() + "," + direction + "," + location.getExits().get(direction) + "\n");
+                    }
                 }
             }
         }
@@ -40,11 +42,9 @@ public class Locations implements Map<Integer, Location> {
     }
 
     static {
-        Scanner scanner = null;
-        try{
-            scanner = new Scanner(new FileReader("locations_big.txt"));
+        try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("locations_big.txt")))) {
             scanner.useDelimiter(",");
-            while(scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 int loc = scanner.nextInt();
                 scanner.skip(scanner.delimiter());
                 String description = scanner.nextLine();
@@ -52,19 +52,15 @@ public class Locations implements Map<Integer, Location> {
                 Map<String, Integer> tempExit = new HashMap<>();
                 locations.put(loc, new Location(loc, description, tempExit));
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally{
-            if(scanner != null){
-                scanner.close();
-
-            }
         }
 
-        try{
-            scanner = new Scanner((new BufferedReader( new FileReader("directions_big.txt"))));
-            scanner.useDelimiter(",");
-            while(scanner.hasNextLine()){
+        try (BufferedReader dirFile = new BufferedReader(new FileReader("directions_big.txt"))) {
+            String input;
+
+            while ((input = dirFile.readLine()) != null) {
+
 //                int loc = scanner.nextInt();
 //                scanner.skip(scanner.delimiter());
 //                String direction = scanner.next();
@@ -72,7 +68,6 @@ public class Locations implements Map<Integer, Location> {
 //                String dest = scanner.nextLine();
 //                int destination = Integer.parseInt(dest);
 
-                String input = scanner.nextLine();
                 String[] data = input.split(",");
                 int loc = Integer.parseInt(data[0]);
                 String direction = data[1];
@@ -80,14 +75,13 @@ public class Locations implements Map<Integer, Location> {
 
                 System.out.println(loc + ": " + direction + "; " + destination);
                 Location location = locations.get(loc);
-                location.addExit(direction,destination);
+
+                location.addExit(direction, destination);
+
+
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally{
-            if(scanner!= null){
-                scanner.close();
-            }
         }
 //        Map<String, Integer> tempExit = new HashMap<String, Integer>();
 //        locations.put(0, new Location(0, "You are sitting in front of a computer learning Java", null));
@@ -116,6 +110,11 @@ public class Locations implements Map<Integer, Location> {
 //        tempExit.put("S", 1);
 //        tempExit.put("W", 2);
 //        locations.put(5, new Location(5, "You are in the forest", tempExit));
+
+    }
+
+    public void initialize() throws Exception {
+
 
     }
 
