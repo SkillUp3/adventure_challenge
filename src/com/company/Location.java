@@ -22,9 +22,9 @@ public class Location {
         }
         this.exits.put("Q", 0);
     }
-//    public void addExit(String direction, int location){
-//        exits.put(direction, location);
-//    }
+    protected void addExit(String direction, int location){
+        exits.put(direction, location);
+    }
 //Here is your challenge and the challenges to work out what is wrong with the location constructor that would
 //    allow the program to compile and crash at runtime so when you identify the problem modify the code to fix it
 //    so I just i’ll just say that again your challenge here is to work out what is wrong with the location constructor
